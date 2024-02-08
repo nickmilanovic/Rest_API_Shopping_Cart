@@ -1,0 +1,70 @@
+ASSIGNMENT 2 MODIFICATIONS
+
+This document is prepared for the purpose of identifying the modifications made to the e-commerce website we created
+in Assignment 1. The main difference is that we are using a database to store our product data rather than a JSON file.
+This allows for easier addition of new products/categories, as well as more of a dynamic approach to build an e-commerce 
+website. I have set the 9 major differences in the assignment in the comments of the 3 files provided for the assignment
+and will be going into detail regarding each change. To see the code differences, please refer to API.php, A2.php and/or
+A2JS.js and look for the matching index in the comments.
+
+MOD_1:
+In assignment 1, rather than selecting all of the categories from a database and creating a dynamic list that will 
+automatically change everytime something is added or removed, the categories were hardcoded and given anchor tags
+
+MOD_2:
+The syntax is similar for the approach I took, except the difference is that I made a SQL query to the database to retrieve
+all of the products within a chosen category, in A1 this was retrieved from a JSON file
+
+MOD_3:
+Set a while loop to paint the table in the products div and modify the quantity label depending on whether the specified
+product was sold out or not. In A1 I didn't do this at all so this was an added feature of A2
+
+MOD_4:
+Used an SQL query to search for the details of a specific product when it is selected by a user from the list of products.
+This will take us to a new page where the GET request is now a product and not a category, and then provide is with the 
+option of adding the product to the cart, unless it is sold out then the button is disabled.
+
+MOD_5:
+This is the biggest modificaiton in the whole assignment. This mod accounts for the different types of requests that
+are made within the process of browsing the website. These 3 requests are all in relation to the cart and its contents.
+The query checks if there are any products in the cart and then provides us with the required information to paint a table
+in the Cart div. The second request is a POST, which will add an item to the cart quantity in the database, asycnchronously 
+removing the same quantity from the total quantity. The third request is a REMOVE which will do the opposite of a POST.
+
+MODS 6-10 are all done in a javascript file
+
+MOD_6:
+Success function, used everytime an event happens in our website. This success function is responsible for painting
+or removing the cart quantities from the cart table in the cart div depending on which button is clicked. In A1 this 
+was done in the same PHP file using a foreach loop.
+
+MOD_7:
+cartFunction, is a function within the success function that is iterating through the cart object to see what will be painted.
+If there are no products in the cart, or every cart quantity of a specific product gets removed from the cart, the product does
+not get painted, or it gets removed from the table accordingly. This function also calculates the subtotal based on the product
+cost x the quantity, and then appends it to a variable.
+
+MOD_8:
+The remove button event handler actually makes a query selector for all of the buttons within the .removeButton class. When
+a new product gets added to the cart, it comes with a REMOVE button to give users an option to remove it from the cart. Each
+of these buttons are in the same class, but they each have a unique ID which is correlated to the product ID. This is so that 
+the code will know WHICH specific item is being removed from the cart, and also which request to make to modify the database accordingly.
+This is similar to how I did it in A1, except the modification of data is being done on a database and not a JSON file. Also, JavaScript
+is displaying the changes as they come rather than php.
+
+Because this is a POST request, I had to create another PHP file with a different action within the database, its the same request
+but just a different action, removing from the cart this time.
+
+MOD_9:
+Using a GET request to fetch all of the products that are in a cart. In A1 I would make the same request except this GET request
+was related to the link. This time a cart object was created with the use of a database and rather than modifying the link, it
+iterates through that object to see its contents. If there are no contents in the cart, nothing gets drawn or modified
+
+MOD_10:
+The add to cart button event handler operates the same way as the remove button except in an opposite manor, from the perspective 
+of e-commerce website rather than the customer side. This will remove the quantity of 1 from the product quantity section of the database
+and add it to the product cart quantity asynchronously.
+
+MODIFICATION I COULDN'T FIGURE OUT:
+For the life of me, I could not figure out how to show a max of 7 products per page in the list of products div, this is the one 
+modification I couldn't figure out from assignment 1 to assignment 2.
